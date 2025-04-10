@@ -1,0 +1,69 @@
+.card {
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+h2, h3, h4 {
+  font-weight: 600;
+}
+
+.header-row,
+.form-data-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.form-control {
+  border-radius: 5px;
+}
+
+.body-type-selector label {
+  font-weight: 500;
+  margin-right: 15px;
+}
+
+.response-card {
+  background-color: #f8f9fa;
+}
+
+.response-box {
+  background: #eef1f6;
+  padding: 10px;
+  border-radius: 5px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-x: auto;
+  max-height: 400px;
+}
+
+.btn {
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-danger:hover {
+  background-color: #a71d2a;
+}
+
+.shadow-lg {
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+}

@@ -1,0 +1,138 @@
+<div class="container mt-4">
+  <div class="card shadow-lg">
+    <div class="card-body">
+      <h2 class="text-center mb-4 text-primary">API REQUEST BUILDER</h2>
+      <button type="button" (click)="saveCurl()">Copy CURL to Console</button>
+      <button type="button" (click)="parseCurl(curl)">Parse Curl</button>
+
+      <div class="form-group">
+        <label>Request Method</label>
+        <select [(ngModel)]="method" class="form-control">
+          <option value="GET">GET</option>
+          <option value="POST">POST</option>
+          <option value="PUT">PUT</option>
+          <option value="DELETE">DELETE</option>
+          <option value="PATCH">PATCH</option>
+          <option value="HEAD">HEAD</option>
+          <option value="OPTIONS">OPTIONS</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Request URL</label>
+        <input
+          type="text"
+          [(ngModel)]="url"
+          placeholder="Enter URL"
+          class="form-control"
+        />
+      </div>
+
+      <div class="form-group">
+        <h4>Headers</h4>
+        <div
+          *ngFor="let header of headers; let i = index"
+          class="header-row d-flex align-items-center"
+        >
+          <input
+            type="text"
+            [(ngModel)]="header.key"
+            placeholder="Key"
+            class="form-control"
+          />
+          <input
+            type="text"
+            [(ngModel)]="header.value"
+            placeholder="Value"
+            class="form-control ml-2"
+          />
+          <button (click)="removeHeader(i)" class="btn btn-danger ml-2">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </div>
+        <button (click)="addHeader()" class="btn btn-primary mt-2">
+          Add Header
+        </button>
+      </div>
+
+      <div
+        class="form-group"
+        *ngIf="method !== 'GET' && method !== 'HEAD' && method !== 'OPTIONS'"
+      >
+        <h4>Request Body</h4>
+        <div class="body-type-selector">
+          <label class="mr-3">
+            <input type="radio" [(ngModel)]="bodyType" value="raw" />
+            Raw JSON
+          </label>
+          <label>
+            <input type="radio" [(ngModel)]="bodyType" value="form-data" />
+            Form Data
+          </label>
+        </div>
+
+        <div *ngIf="bodyType === 'raw'">
+          <textarea
+            [(ngModel)]="requestBody"
+            rows="5"
+            placeholder="Enter request body (JSON)"
+            class="form-control"
+          ></textarea>
+        </div>
+
+        <div *ngIf="bodyType === 'form-data'">
+          <h4>Form Data</h4>
+          <div
+            *ngFor="let item of formData; let i = index"
+            class="form-data-row d-flex align-items-center"
+          >
+            <input
+              type="text"
+              [(ngModel)]="item.key"
+              placeholder="Key"
+              class="form-control"
+            />
+            <select [(ngModel)]="item.type" class="form-control ml-2">
+              <option value="text">Text</option>
+              <option value="file">File</option>
+            </select>
+            <input
+              *ngIf="item.type === 'text'"
+              type="text"
+              [(ngModel)]="item.value"
+              placeholder="Value"
+              class="form-control ml-2"
+            />
+            <input
+              *ngIf="item.type === 'file'"
+              type="file"
+              (change)="handleFileInput($event, i)"
+              class="form-control file-input ml-2"
+            />
+            <button (click)="removeFormDataItem(i)" class="btn btn-danger ml-2">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+          <button (click)="addFormDataItem()" class="btn btn-primary mt-2">
+            Add Form Data
+          </button>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <button (click)="sendRequest()" class="btn btn-success btn-lg">
+          Send Request
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card shadow-lg mt-4 response-card" *ngIf="response">
+    <div class="card-body">
+      <h3 class="text-center text-primary">RESPONSE</h3>
+      <div [ngClass]="responseStatus.split(' ')[0] === '200' ? 'alert alert-info' : 'alert alert-danger'">Status: {{ responseStatus }}</div>
+      <pre class="response-box">
+        <ngx-json-viewer [json]="response"></ngx-json-viewer><!-- [expanded]="false" -->
+      </pre>
+    </div>
+  </div>
+</div>
