@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -21,7 +21,7 @@ interface FormDataItem {
   templateUrl: './requests.component.html',
   styleUrl: './requests.component.scss'
 })
-export default class RequestsComponent {
+export default class RequestsComponent implements OnChanges {
   method = 'GET';
   url = '';
   headers: Header[] = [];
@@ -30,20 +30,15 @@ export default class RequestsComponent {
   responseStatus = '';
   bodyType: 'raw' | 'form-data' = 'raw';
   formData: FormDataItem[] = [];
-  /* curl = 'curl -X GET "http://localhost:5000/api/teams/user/67f61aedb5246e55e653c361" \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZjYxYWVkYjUyNDZlNTVlNjUzYzM2MSIsImlhdCI6MTc0NDI2MTc2NX0.6P-IBclojUbCfPmGYesqA1LoCnheRBP4b3MdCRpE3D0"' */
-
-  curl = `curl -X POST "http://localhost:5000/api/auth/register" \
-          -d '{
-          "name":"Netaji",
-          "email":"netaji.naxtre.com",
-          "password":"123456"
-          }'`
+  @Input() curl: any
   constructor(private http: HttpClient,private spinner: NgxSpinnerService) {}
 
   ngOnInit() {
     this.addHeader();
     this.addFormDataItem();
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+      this.parseCurl(this.curl.content)
   }
 
   addHeader() {
@@ -149,6 +144,7 @@ export default class RequestsComponent {
   }
 
   parseCurl(curl: string) {
+    this.response = null
     // Normalize curl string
     curl = curl.replace(/\\\n/g, ' ').replace(/\s+/g, ' ').trim();
 

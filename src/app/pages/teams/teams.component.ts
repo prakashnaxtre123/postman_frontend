@@ -3,15 +3,19 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpRequestService } from 'src/app/services/http-request.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import RequestsComponent from '../requests/requests.component';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+
 @Component({
   selector: 'app-teams',
   standalone: true,
-  imports: [SharedModule,RequestsComponent],
+  imports: [SharedModule,NzMenuModule,NzIconModule,RequestsComponent,],
   templateUrl: './teams.component.html',
   styleUrl: './teams.component.scss'
 })
 export default class TeamsComponent implements OnInit {
   workspaceList: any;
+  documentDetails:any;
 
   constructor(private activatedRoute: ActivatedRoute, private httpRequest:HttpRequestService){
 
@@ -34,7 +38,11 @@ export default class TeamsComponent implements OnInit {
       console.log(err)
     }
    })
+
   }
 
+  showDocument(docs:any){
+    this.documentDetails = docs
+  }
 
 }

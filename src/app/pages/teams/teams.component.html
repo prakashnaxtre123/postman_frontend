@@ -1,44 +1,20 @@
-<div>
-  <div>
-    <h5 class="mt-4 mb-3">Workspace List</h5>
-    <hr />
-    <div class="card">
-      <div class="card-body">
-        <div ngbAccordion [closeOthers]="true">
-          @for (item of workspaceList; track item) {
-            <div ngbAccordionItem>
-              <h2 ngbAccordionHeader>
-                <button ngbAccordionButton>{{ item.name }}</button>
-              </h2>
-              <div ngbAccordionCollapse>
-                <div ngbAccordionBody>
-                  <ng-template>
-                    <div class="col-sm-12">
-                      <div class="card">
-                        <div class="card-body">
-                          <h5 class="mb-3">Vertical Pills</h5>
-                          <div class="row">
-                            <div class="col-md-3 col-sm-12">
-                              <ul class="nav flex-column nav-pills" ngbNav #nav3="ngbNav" orientation="vertical" y>
-                                <li [ngbNavItem]="1" class="nav-item">
-                                  <a class="nav-link" ngbNavLink>Home</a>
-                                </li>
-                              </ul>
-                            </div>
-                            <div class="col-md-9 col-sm-12">
-                              <div [ngbNavOutlet]="nav3" class="ms-4"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </ng-template>
-                </div>
-              </div>
-            </div>
+<div style="display: flex;">
+  <div style="width:200px">
+    <h3>Workspaces</h3>
+    <ul nz-menu nzMode="inline">
+      @for (item of workspaceList; track $index) {
+      <li nz-submenu [nzTitle]="item?.name" nzIcon="appstore">
+        <ul>
+          @for (docs of item?.documents; track $index) {
+          <li nz-menu-item (click)="showDocument(docs)">{{docs?.title}}</li>
           }
-        </div>
-      </div>
-    </div>
+        </ul>
+      </li>
+      }
+
+    </ul>
+  </div>
+  <div style="width: 100%;">
+    <app-requests [curl] = "documentDetails"></app-requests>
   </div>
 </div>
