@@ -5,6 +5,7 @@ import { Location, LocationStrategy } from '@angular/common';
 // project import
 import { environment } from 'src/environments/environment';
 import { NavigationItem, NavigationItems } from '../navigation';
+import { HttpRequestService } from 'src/app/services/http-request.service';
 
 @Component({
   selector: 'app-nav-content',
@@ -17,7 +18,7 @@ export class NavContentComponent implements OnInit {
   currentApplicationVersion = environment.appVersion;
 
   // public pops
-  navigations: NavigationItem[];
+  navigations!: NavigationItem[];
   wrapperWidth!: number;
   windowWidth: number;
 
@@ -25,14 +26,16 @@ export class NavContentComponent implements OnInit {
   // constructor
   constructor(
     private location: Location,
-    private locationStrategy: LocationStrategy
+    private locationStrategy: LocationStrategy,
+    private httpRequest: HttpRequestService
   ) {
     this.windowWidth = window.innerWidth;
-    this.navigations = NavigationItems;
+    //this.navigations = NavigationItems;
   }
 
   // life cycle event
   ngOnInit() {
+    this.getAllTeams()
     if (this.windowWidth < 992) {
       document.querySelector('.pcoded-navbar')?.classList.add('menupos-static');
     }
@@ -70,4 +73,51 @@ export class NavContentComponent implements OnInit {
       }
     }
   }
+
+   getAllTeams(){
+    this.httpRequest.getTeams().subscribe({
+      next:(res:any) => {
+          let data = res.data.map((item:any,index:number) => {
+            return{
+              id: item._id,
+              title: item.name,
+              type: 'item',
+              url: `/teams/${item._id}`,
+              icon: 'feather icon-users'
+            }
+          })
+
+          this.navigations =[
+          {
+            id: 'Teams',
+            title: 'Teams',
+            type: 'group',
+            icon: 'icon-group',
+            children: data
+          }]
+          console.log(data)
+      },
+      error:(err) => {
+
+      }
+    })
+   }
 }
+
+
+/*
+  {
+    id: 'navigation',
+    title: 'Navigation',
+    type: 'group',
+    icon: 'icon-group',
+    children: [
+      {
+        id: 'dashboard',
+        title: 'Dashboard',
+        type: 'item',
+        url: '/requests',
+        icon: 'feather icon-home'
+      }
+    ]
+  }, */

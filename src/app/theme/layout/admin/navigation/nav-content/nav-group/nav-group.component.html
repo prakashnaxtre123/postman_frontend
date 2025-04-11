@@ -1,5 +1,5 @@
 <li class="nav-item pcoded-menu-caption">
-  <label>{{ item.title }}</label>
+  <label>{{ item.title | uppercase}}</label>
 </li>
 @for (item of item.children; track item) {
   @if (item.type === 'group') {

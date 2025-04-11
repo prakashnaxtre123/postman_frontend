@@ -828,10 +828,10 @@
         color: #fff;
         padding: 18px 15px 5px;
         position: relative;
-        text-transform: lowercase;
         letter-spacing: 1px;
         border-top: 1px solid darken($menu-dark-text-color, 40%);
         margin-top: 10px;
+        margin-left: 16px;
 
         &:first-child {
           border-top: none;

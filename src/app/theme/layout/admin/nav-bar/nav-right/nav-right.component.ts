@@ -4,6 +4,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 
 // bootstrap
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-right',
@@ -28,14 +29,19 @@ export class NavRightComponent {
   friendId!: number;
 
   // constructor
-  constructor() {
+  constructor( private router:Router) {
     this.visibleUserList = false;
     this.chatMessage = false;
+
   }
 
   // public method
   onChatToggle(friendID: number) {
     this.friendId = friendID;
     this.chatMessage = !this.chatMessage;
+  }
+  logout(){
+    localStorage.removeItem("postman_user_details")
+    this.router.navigate(['auth/signin'])
   }
 }

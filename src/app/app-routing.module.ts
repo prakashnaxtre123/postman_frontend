@@ -5,11 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 // project import
 import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
+import { authGuard } from './services/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: '',
@@ -19,6 +21,10 @@ const routes: Routes = [
       {
         path: 'requests',
         loadComponent: () => import('./pages/requests/requests.component')
+      },
+      {
+        path: 'teams/:id',
+        loadComponent: () => import('./pages/teams/teams.component')
       },
       {
         path: 'analytics',
