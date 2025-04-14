@@ -6,6 +6,7 @@ import { Location, LocationStrategy } from '@angular/common';
 import { environment } from 'src/environments/environment';
 import { NavigationItem, NavigationItems } from '../navigation';
 import { HttpRequestService } from 'src/app/services/http-request.service';
+import { DataSharingService } from 'src/app/services/data-sharing.service';
 
 @Component({
   selector: 'app-nav-content',
@@ -27,7 +28,8 @@ export class NavContentComponent implements OnInit {
   constructor(
     private location: Location,
     private locationStrategy: LocationStrategy,
-    private httpRequest: HttpRequestService
+    private httpRequest: HttpRequestService,
+    private dataShare: DataSharingService
   ) {
     this.windowWidth = window.innerWidth;
     //this.navigations = NavigationItems;
@@ -35,7 +37,12 @@ export class NavContentComponent implements OnInit {
 
   // life cycle event
   ngOnInit() {
-    this.getAllTeams()
+    this.getAllTeams();
+    this.dataShare.message$.subscribe((msg) => {
+      if(msg == 'update'){
+        this.getAllTeams()
+      }
+    })
     if (this.windowWidth < 992) {
       document.querySelector('.pcoded-navbar')?.classList.add('menupos-static');
     }

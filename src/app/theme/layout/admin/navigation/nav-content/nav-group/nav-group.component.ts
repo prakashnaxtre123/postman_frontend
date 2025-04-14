@@ -4,6 +4,9 @@ import { Location, LocationStrategy } from '@angular/common';
 
 // project import
 import { NavigationItem } from '../../navigation';
+import { HttpRequestService } from 'src/app/services/http-request.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { DataSharingService } from 'src/app/services/data-sharing.service';
 
 @Component({
   selector: 'app-nav-group',
@@ -17,7 +20,10 @@ export class NavGroupComponent implements OnInit {
   // constructor
   constructor(
     private location: Location,
-    private locationStrategy: LocationStrategy
+    private locationStrategy: LocationStrategy,
+    private httpRequest:HttpRequestService,
+    private message: NzMessageService,
+    private dataShare: DataSharingService
   ) {}
 
   // life cycle event
@@ -45,5 +51,17 @@ export class NavGroupComponent implements OnInit {
         last_parent.classList.add('active');
       }
     }
+  }
+
+  createTeam(name:any){
+    this.httpRequest.createTeam({name}).subscribe({
+      next:(res:any) => {
+        this.message.success(res.message);
+        this.dataShare.updateMessage('update')
+      },
+      error:(err) =>{
+        this.message.error(err.error.message)
+      }
+    })
   }
 }

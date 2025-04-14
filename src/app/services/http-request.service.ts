@@ -25,4 +25,16 @@ export class HttpRequestService {
   getTeamDetails(teamId:any){
     return this.http.get(`${environment.apiUrl + ENDPOINTS.teamDetails}/${teamId} `,{ headers: this.headers })
   }
+  createDocument(data:any){
+    return this.http.post(`${environment.apiUrl + ENDPOINTS.createDocument}`,data,{ headers: this.headers })
+  }
+  updateDocument(paramId:any,data:any){
+    return this.http.put(`${environment.apiUrl + ENDPOINTS.createDocument}/${paramId}`,data,{ headers: this.headers })
+  }
+  createWorkspace(data:any){
+    return this.http.post(`${environment.apiUrl + ENDPOINTS.createWorkspace}`,data,{ headers: this.headers })
+  }
+  createTeam(data:any){
+    return this.http.post(`${environment.apiUrl + ENDPOINTS.createTeam}`,data,{ headers: this.headers })
+  }
 }

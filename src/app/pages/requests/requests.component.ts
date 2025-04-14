@@ -2,8 +2,12 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpRequestService } from 'src/app/services/http-request.service';
+
 interface Header {
   key: string;
   value: string;
@@ -17,7 +21,7 @@ interface FormDataItem {
 @Component({
   selector: 'app-requests',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgxJsonViewerModule],
+  imports: [CommonModule, FormsModule, NgxJsonViewerModule,NzButtonModule],
   templateUrl: './requests.component.html',
   styleUrl: './requests.component.scss'
 })
@@ -31,16 +35,14 @@ export default class RequestsComponent implements OnChanges {
   bodyType: 'raw' | 'form-data' = 'raw';
   formData: FormDataItem[] = [];
   @Input() curl: any
-  constructor(private http: HttpClient,private spinner: NgxSpinnerService) {}
+  constructor(private http: HttpClient,private spinner: NgxSpinnerService,private httpRequest: HttpRequestService, private message:NzMessageService ) {}
 
   ngOnInit() {
     this.addHeader();
     this.addFormDataItem();
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if(this.curl?.content){
-      this.parseCurl(this.curl.content)
-    }
+    this.parseCurl(this.curl.content)
   }
 
   addHeader() {
@@ -113,7 +115,7 @@ export default class RequestsComponent implements OnChanges {
     });
   }
 
-  saveCurl() {
+  generateCurl() {
     const method = this.method.toUpperCase();
     const url = this.url;
     const headersArray = this.headers.filter(h => h.key && h.value);
@@ -141,8 +143,8 @@ export default class RequestsComponent implements OnChanges {
         });
       }
     }
-
-    console.log('Generated CURL Command:\n' + curl);
+    return curl;
+    //console.log('Generated CURL Command:\n' + curl);
   }
 
   parseCurl(curl: string) {
@@ -199,5 +201,21 @@ export default class RequestsComponent implements OnChanges {
       }
     });
     return headers;
+  }
+
+  saveDocument(){
+    let content = this.generateCurl();
+    let title = this.curl.title;
+    //let workspcaeId = this.curl.workspace
+    let obj = {content, title};
+    console.log(this.curl._id,obj)
+    this.httpRequest.updateDocument(this.curl._id,obj).subscribe({
+      next:(res:any) => {
+        this.message.success(res.message)
+      },
+      error:(err) => {
+        this.message.error(err.error.message)
+      }
+    })
   }
 }

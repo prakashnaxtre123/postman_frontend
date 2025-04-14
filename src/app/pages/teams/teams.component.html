@@ -2,11 +2,24 @@
   <div style="width:200px">
     <h3>Workspaces</h3>
     <ul nz-menu nzMode="inline">
+      <li>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton1">
+          <input type="text" #workspaceName nz-input placeholder="Workspace Name" />
+          </nz-input-group>
+          <ng-template #suffixIconButton1>
+            <button nz-button nzType="primary" nzSearch (click)="createWorkspace(workspaceName.value)"><nz-icon nzType="plus-square" /></button>
+          </ng-template>
+      </li>
       @for (item of workspaceList; track $index) {
       <li nz-submenu [nzTitle]="item?.name" nzIcon="folder-open">
         <ul>
-          <li nz-menu-item>
-            <button nz-button nzType="primary">Add Document</button>
+          <li>
+                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <input type="text" #docName nz-input placeholder="Document Name" />
+                </nz-input-group>
+                <ng-template #suffixIconButton>
+                  <button nz-button nzType="primary" nzSearch (click)="createDocument(docName.value,item?._id)"><nz-icon nzType="plus-square" /></button>
+                </ng-template>
           </li>
           @for (docs of item?.documents; track $index) {
           <li nz-menu-item (click)="showDocument(docs)">{{docs?.title}}</li>
@@ -17,7 +30,13 @@
 
     </ul>
   </div>
-  <div style="width: 100%;" *ngIf="documentDetails">
+  <div style="width: 100%;" *ngIf="documentDetails else blankRequest">
     <app-requests [curl] = "documentDetails"></app-requests>
   </div>
+  <ng-template #blankRequest>
+    <div style="width: 100%;">
+      <app-requests></app-requests>
+    </div>
+  </ng-template>
+
 </div>

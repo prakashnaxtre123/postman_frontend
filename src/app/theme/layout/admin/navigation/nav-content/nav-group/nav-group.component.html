@@ -1,6 +1,14 @@
 <li class="nav-item pcoded-menu-caption">
   <label>{{ item.title | uppercase}}</label>
 </li>
+<li class="nav-item pcoded-menu-caption">
+  <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton1">
+    <input type="text" #teamName nz-input placeholder="Team Name" />
+    </nz-input-group>
+    <ng-template #suffixIconButton1>
+      <button nz-button nzType="primary" (click)="createTeam(teamName.value)" nzSearch><nz-icon nzType="plus-square" /></button>
+    </ng-template>
+</li>
 @for (item of item.children; track item) {
   @if (item.type === 'group') {
     <app-nav-group [item]="item"></app-nav-group>
