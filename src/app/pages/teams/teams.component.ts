@@ -5,11 +5,12 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
 import RequestsComponent from '../requests/requests.component';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-teams',
   standalone: true,
-  imports: [SharedModule,NzMenuModule,NzIconModule,RequestsComponent,],
+  imports: [SharedModule,NzMenuModule,NzIconModule,RequestsComponent,NzButtonModule],
   templateUrl: './teams.component.html',
   styleUrl: './teams.component.scss'
 })

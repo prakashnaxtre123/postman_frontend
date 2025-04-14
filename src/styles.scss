@@ -63,3 +63,9 @@ File: style.css
 
 // custom
 @import 'scss/themes/custom';
+
+.ant-menu-submenu-title .anticon {
+  min-width: 14px;
+  font-size: 20px !important;
+  transition: font-size .15s cubic-bezier(.215, .61, .355, 1), margin .3s cubic-bezier(.645, .045, .355, 1), color .3s;
+}

@@ -3,8 +3,11 @@
     <h3>Workspaces</h3>
     <ul nz-menu nzMode="inline">
       @for (item of workspaceList; track $index) {
-      <li nz-submenu [nzTitle]="item?.name" nzIcon="appstore">
+      <li nz-submenu [nzTitle]="item?.name" nzIcon="folder-open">
         <ul>
+          <li nz-menu-item>
+            <button nz-button nzType="primary">Add Document</button>
+          </li>
           @for (docs of item?.documents; track $index) {
           <li nz-menu-item (click)="showDocument(docs)">{{docs?.title}}</li>
           }
@@ -14,7 +17,7 @@
 
     </ul>
   </div>
-  <div style="width: 100%;">
+  <div style="width: 100%;" *ngIf="documentDetails">
     <app-requests [curl] = "documentDetails"></app-requests>
   </div>
 </div>

@@ -38,7 +38,9 @@ export default class RequestsComponent implements OnChanges {
     this.addFormDataItem();
   }
   ngOnChanges(changes: SimpleChanges): void {
+    if(this.curl?.content){
       this.parseCurl(this.curl.content)
+    }
   }
 
   addHeader() {
