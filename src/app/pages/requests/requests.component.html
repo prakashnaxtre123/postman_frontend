@@ -1,11 +1,17 @@
-<div class="container mt-2">
-  <div class="card">
+<div class="container mt-2"  style="max-height: 90vh; overflow-y: auto;">
+  <div class="card" style="transition: none; box-shadow: none; padding: 0;">
     <div class="card-body">
      <div style="display: flex; justify-content: space-between;" *ngIf="curl?.title">
-      <h4 class="text-center mb-4 text-primary"><u>{{curl?.title | uppercase}}</u></h4>
+      <h4 class="text-center mb-4 text-primary">
+        <u *ngIf="titleEdit === false else updateTitle" (dblclick)="changeEditFlag()">{{curl.title | uppercase}}</u>&nbsp;
+        <ng-template #updateTitle>
+          <input type="text" [(ngModel)]="curl.title" placeholder="Enter URL"
+          class="form-control">
+        </ng-template>
+
+      </h4>
       <button nz-button nzType="primary"  type="button" (click)="saveDocument()">Save</button>
      </div>
-<!--       <button nz-button nzType="primary" (click)="parseCurl(curl)">Parse Curl</button> -->
 
       <div class="form-group">
         <label>Request Method</label>
@@ -122,18 +128,18 @@
       </div>
 
       <div class="text-center mt-4">
-        <button (click)="sendRequest()" class="btn btn-success btn-lg">
+        <button (click)="sendRequest()" class="btn btn-success">
           Send Request
         </button>
       </div>
     </div>
   </div>
-  <div class="card shadow-lg mt-4 response-card" *ngIf="response">
+  <div class="card" style="transition: none; box-shadow: none; padding: 0;" *ngIf="response">
     <div class="card-body">
       <h3 class="text-center text-primary">RESPONSE</h3>
       <div [ngClass]="responseStatus.split(' ')[0] === '200' ? 'alert alert-info' : 'alert alert-danger'">Status: {{ responseStatus }}</div>
       <pre class="response-box">
-        <ngx-json-viewer [json]="response"></ngx-json-viewer><!-- [expanded]="false" -->
+        <ngx-json-viewer [json]="response"></ngx-json-viewer>
       </pre>
     </div>
   </div>

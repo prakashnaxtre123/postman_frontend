@@ -1,6 +1,14 @@
 <ng-scrollbar (clickOutside)="navMob()" style="height: calc(100vh - 56px)">
   <div class="navbar-content">
     <ul class="nav pcoded-inner-navbar" (clickOutside)="fireOutClick()">
+      <li style="margin-left: 8px;margin-right: 20px;margin-top: 5px;">
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton1">
+          <input type="text" #teamName nz-input placeholder="Team Name" />
+          </nz-input-group>
+          <ng-template #suffixIconButton1>
+            <button nz-button nzType="primary" (click)="createTeam(teamName.value)" nzSearch><nz-icon nzType="plus-square" /></button>
+          </ng-template>
+      </li>
       @for (item of navigations; track item) {
         @if (item.type === 'group') {
           <app-nav-group [item]="item"></app-nav-group>

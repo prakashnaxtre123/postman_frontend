@@ -13,4 +13,7 @@ export class AuthService {
   login(data:any){
     return this.http.post(`${environment.apiUrl + ENDPOINTS.login}`,data)
   }
+  register(data:any){
+    return this.http.post(`${environment.apiUrl + ENDPOINTS.register}`,data)
+  }
 }

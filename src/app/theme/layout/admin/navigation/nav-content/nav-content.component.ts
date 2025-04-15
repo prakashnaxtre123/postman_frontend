@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { NavigationItem, NavigationItems } from '../navigation';
 import { HttpRequestService } from 'src/app/services/http-request.service';
 import { DataSharingService } from 'src/app/services/data-sharing.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-nav-content',
@@ -29,7 +30,9 @@ export class NavContentComponent implements OnInit {
     private location: Location,
     private locationStrategy: LocationStrategy,
     private httpRequest: HttpRequestService,
-    private dataShare: DataSharingService
+    private dataShare: DataSharingService,
+    private message: NzMessageService,
+
   ) {
     this.windowWidth = window.innerWidth;
     //this.navigations = NavigationItems;
@@ -109,6 +112,18 @@ export class NavContentComponent implements OnInit {
       }
     })
    }
+
+   createTeam(name:any){
+    this.httpRequest.createTeam({name}).subscribe({
+      next:(res:any) => {
+        this.message.success(res.message);
+        this.dataShare.updateMessage('update')
+      },
+      error:(err) =>{
+        this.message.error(err.error.message)
+      }
+    })
+  }
 }
 
 

@@ -21,9 +21,6 @@ export class NavGroupComponent implements OnInit {
   constructor(
     private location: Location,
     private locationStrategy: LocationStrategy,
-    private httpRequest:HttpRequestService,
-    private message: NzMessageService,
-    private dataShare: DataSharingService
   ) {}
 
   // life cycle event
@@ -53,15 +50,4 @@ export class NavGroupComponent implements OnInit {
     }
   }
 
-  createTeam(name:any){
-    this.httpRequest.createTeam({name}).subscribe({
-      next:(res:any) => {
-        this.message.success(res.message);
-        this.dataShare.updateMessage('update')
-      },
-      error:(err) =>{
-        this.message.error(err.error.message)
-      }
-    })
-  }
 }

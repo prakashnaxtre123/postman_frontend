@@ -8,11 +8,14 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { DataSharingService } from 'src/app/services/data-sharing.service';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 @Component({
   selector: 'app-teams',
   standalone: true,
-  imports: [SharedModule,NzMenuModule,NzIconModule,RequestsComponent,NzButtonModule,NzInputModule],
+  imports: [SharedModule,NzMenuModule,NzIconModule,RequestsComponent,NzButtonModule,NzInputModule,NzDropDownModule,NzPopconfirmModule],
   templateUrl: './teams.component.html',
   styleUrl: './teams.component.scss'
 })
@@ -23,13 +26,22 @@ export default class TeamsComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private httpRequest:HttpRequestService,
-    private message: NzMessageService){
+    private message: NzMessageService,
+    private dataShare:DataSharingService){
 
   }
   ngOnInit(): void {
    this.activatedRoute.params.subscribe((param:any) => {
     this.getTeamDetailsByTeamId(param.id)
    })
+
+   this.dataShare.message1$.subscribe((msg) => {
+    if(msg == 'update'){
+      this.activatedRoute.params.subscribe((param:any) => {
+        this.getTeamDetailsByTeamId(param.id)
+       })
+    }
+  })
   }
 
 
@@ -84,5 +96,18 @@ export default class TeamsComponent implements OnInit {
       }
     })
   }
+
+  deleteDocument(doc: any) {
+    this.httpRequest.deleteDocument(doc._id).subscribe({
+      next: (res:any) => {
+        this.message.success(res.message);
+        this.dataShare.updateMessage1("update")
+      },
+      error: (err) => {
+        this.message.error(err.error.message)
+      }
+    })
+  }
+
 
 }

@@ -13,4 +13,11 @@ export class DataSharingService {
   updateMessage(msg:any){
     this.message.next(msg)
   }
+
+  private message1 = new BehaviorSubject('');
+  message1$ = this.message1.asObservable();
+
+  updateMessage1(msg:any){
+    this.message1.next(msg)
+  }
 }

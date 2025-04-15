@@ -1,5 +1,5 @@
 // Angular Import
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 // bootstrap
@@ -22,17 +22,23 @@ import { Router } from '@angular/router';
     ])
   ]
 })
-export class NavRightComponent {
+export class NavRightComponent implements OnInit{
   // public props
   visibleUserList: boolean;
   chatMessage: boolean;
   friendId!: number;
+  parsedUserDetails: any;
 
   // constructor
   constructor( private router:Router) {
     this.visibleUserList = false;
     this.chatMessage = false;
 
+  }
+
+  ngOnInit(): void {
+    const userDetails: any = localStorage.getItem('postman_user_details');
+    this.parsedUserDetails = JSON.parse(userDetails);
   }
 
   // public method

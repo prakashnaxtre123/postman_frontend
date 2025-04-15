@@ -6,7 +6,9 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DataSharingService } from 'src/app/services/data-sharing.service';
 import { HttpRequestService } from 'src/app/services/http-request.service';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 interface Header {
   key: string;
@@ -21,7 +23,7 @@ interface FormDataItem {
 @Component({
   selector: 'app-requests',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgxJsonViewerModule,NzButtonModule],
+  imports: [CommonModule, FormsModule, NgxJsonViewerModule,NzButtonModule,NzIconModule],
   templateUrl: './requests.component.html',
   styleUrl: './requests.component.scss'
 })
@@ -34,14 +36,21 @@ export default class RequestsComponent implements OnChanges {
   responseStatus = '';
   bodyType: 'raw' | 'form-data' = 'raw';
   formData: FormDataItem[] = [];
+  titleEdit = false;
   @Input() curl: any
-  constructor(private http: HttpClient,private spinner: NgxSpinnerService,private httpRequest: HttpRequestService, private message:NzMessageService ) {}
+  constructor(
+    private http: HttpClient,
+    private spinner: NgxSpinnerService,
+    private httpRequest: HttpRequestService,
+    private message:NzMessageService ,
+    private dataShare:DataSharingService) {}
 
   ngOnInit() {
     this.addHeader();
     this.addFormDataItem();
   }
   ngOnChanges(changes: SimpleChanges): void {
+    this.titleEdit = false
     this.parseCurl(this.curl.content)
   }
 
@@ -204,6 +213,7 @@ export default class RequestsComponent implements OnChanges {
   }
 
   saveDocument(){
+    this.titleEdit = false;
     let content = this.generateCurl();
     let title = this.curl.title;
     //let workspcaeId = this.curl.workspace
@@ -212,10 +222,15 @@ export default class RequestsComponent implements OnChanges {
     this.httpRequest.updateDocument(this.curl._id,obj).subscribe({
       next:(res:any) => {
         this.message.success(res.message)
+        this.dataShare.updateMessage1("update")
       },
       error:(err) => {
         this.message.error(err.error.message)
       }
     })
+  }
+
+  changeEditFlag(){
+    this.titleEdit = true
   }
 }

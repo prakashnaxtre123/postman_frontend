@@ -27,6 +27,8 @@ import { provideHttpClient } from '@angular/common/http';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { en_US } from 'ng-zorro-antd/i18n';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
   imports: [BrowserModule, AppRoutingModule, SharedModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule,NzButtonModule,
     NzInputModule,NzIconModule],
   providers: [
+    { provide: NZ_I18N, useValue: en_US },
     provideHttpClient()
   ],
   bootstrap: [AppComponent]
