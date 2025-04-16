@@ -5,6 +5,9 @@ import { animate, style, transition, trigger } from '@angular/animations';
 // bootstrap
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { DataSharingService } from 'src/app/services/data-sharing.service';
+import { HttpRequestService } from 'src/app/services/http-request.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-nav-right',
@@ -28,9 +31,12 @@ export class NavRightComponent implements OnInit{
   chatMessage: boolean;
   friendId!: number;
   parsedUserDetails: any;
+  collaborators:any;
+  flag = false;
+  emailId: any;
 
   // constructor
-  constructor( private router:Router) {
+  constructor( private router:Router,private dataShare: DataSharingService, private httpRequest: HttpRequestService, private message:NzMessageService) {
     this.visibleUserList = false;
     this.chatMessage = false;
 
@@ -39,6 +45,14 @@ export class NavRightComponent implements OnInit{
   ngOnInit(): void {
     const userDetails: any = localStorage.getItem('postman_user_details');
     this.parsedUserDetails = JSON.parse(userDetails);
+    this.dataShare.message2$.subscribe({
+      next: (data:any) => {
+       this.collaborators = data;
+      },
+      error: (err) => {
+        console.log(err.error.message)
+      }
+    })
   }
 
   // public method
@@ -49,5 +63,24 @@ export class NavRightComponent implements OnInit{
   logout(){
     localStorage.removeItem("postman_user_details")
     this.router.navigate(['auth/signin'])
+  }
+  addCollaborator(){
+    let email = this.emailId;
+    let teamId = this.collaborators._id
+    let obj = {email,teamId};
+    this.httpRequest.assignUserToTeam(obj).subscribe({
+      next:(res:any) => {
+        this.message.success(res.message);
+        this.dataShare.updateMessage1("update")
+        this.flag = false;
+        this.emailId = undefined
+      },
+      error: (err) => {
+        this.message.success(err.error.message)
+      }
+    })
+  }
+  collaboratorView(){
+    this.flag = !this.flag
   }
 }

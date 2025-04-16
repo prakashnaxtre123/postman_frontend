@@ -6,5 +6,6 @@ export const ENDPOINTS = {
   createDocument:"documents",
   deleteDocument:"documents",
   createWorkspace:"workspaces",
-  createTeam: "teams"
+  createTeam: "teams",
+  assignUser: "teams/assign"
 }

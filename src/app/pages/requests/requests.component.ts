@@ -9,6 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DataSharingService } from 'src/app/services/data-sharing.service';
 import { HttpRequestService } from 'src/app/services/http-request.service';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { Router } from '@angular/router';
 
 interface Header {
   key: string;
@@ -43,9 +44,13 @@ export default class RequestsComponent implements OnChanges {
     private spinner: NgxSpinnerService,
     private httpRequest: HttpRequestService,
     private message:NzMessageService ,
-    private dataShare:DataSharingService) {}
+    private dataShare:DataSharingService,
+    private router: Router) {}
 
   ngOnInit() {
+    if(this.router.url == '/requests'){
+      this.dataShare.updateMessage2(null)
+    }
     this.addHeader();
     this.addFormDataItem();
   }
@@ -218,7 +223,6 @@ export default class RequestsComponent implements OnChanges {
     let title = this.curl.title;
     //let workspcaeId = this.curl.workspace
     let obj = {content, title};
-    console.log(this.curl._id,obj)
     this.httpRequest.updateDocument(this.curl._id,obj).subscribe({
       next:(res:any) => {
         this.message.success(res.message)

@@ -27,6 +27,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { en_US } from 'ng-zorro-antd/i18n';
 
@@ -50,7 +51,7 @@ import { en_US } from 'ng-zorro-antd/i18n';
     NavGroupComponent
   ],
   imports: [BrowserModule, AppRoutingModule, SharedModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule,NzButtonModule,
-    NzInputModule,NzIconModule],
+    NzInputModule,NzIconModule,NzModalModule],
   providers: [
     { provide: NZ_I18N, useValue: en_US },
     provideHttpClient(),

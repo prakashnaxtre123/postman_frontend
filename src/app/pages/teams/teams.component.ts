@@ -47,10 +47,9 @@ export default class TeamsComponent implements OnInit {
 
 
   getTeamDetailsByTeamId(teamId:any){
-    console.log(teamId)
    this.httpRequest.getTeamDetails(teamId).subscribe({
     next: (res:any) => {
-      console.log(res);
+      this.dataShare.updateMessage2(res.data.team)
       this.workspaceList = res.data.workspaces;
     },
     error: (err) => {

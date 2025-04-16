@@ -46,4 +46,7 @@ export class HttpRequestService {
   deleteDocument(id:any){
     return this.http.delete(`${environment.apiUrl + ENDPOINTS.deleteDocument}/${id}`,{ headers: this.getHeaders() })
   }
+  assignUserToTeam(data:any){
+    return this.http.post(`${environment.apiUrl + ENDPOINTS.assignUser}`,data,{ headers: this.getHeaders() })
+  }
 }

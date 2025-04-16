@@ -99,14 +99,28 @@ export class NavContentComponent implements OnInit {
           })
 
           this.navigations =[
-          {
-            id: 'Teams',
-            title: 'Teams',
-            type: 'group',
-            icon: 'icon-group',
-            children: data
-          }]
-          console.log(data)
+            {
+              id: 'api_test',
+              title: 'API TEST',
+              type: 'group',
+              icon: 'icon-group',
+              children: [
+                {
+                  id: 'api_test',
+                  title: 'API TEST',
+                  type: 'item',
+                  url: '/requests',
+                  icon: 'feather icon-home'
+                }
+              ]
+            },
+            {
+              id: 'Teams',
+              title: 'Teams',
+              type: 'group',
+              icon: 'icon-group',
+              children: data
+            }]
       },
       error:(err) => {
 

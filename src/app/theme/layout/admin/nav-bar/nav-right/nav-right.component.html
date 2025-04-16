@@ -1,78 +1,55 @@
 <ul class="navbar-nav ms-auto">
-<!--   <li>
+
+  <li *ngIf="collaborators?._id">
     <div class="dropdown" ngbDropdown placement="auto">
       <a ngbDropdownToggle href="javascript:">
-        <i class="icon feather icon-bell" title="Notification"></i>
+        <nz-icon nzType="node-collapse" nzTheme="outline" title="Collaborators"></nz-icon>
         <span class="badge bg-danger"><span class="sr-only"></span></span>
       </a>
+
       <div ngbDropdownMenu class="dropdown-menu dropdown-menu-end notification">
         <div class="noti-head">
-          <h6 class="d-inline-block m-b-0">Notifications</h6>
-          <div class="float-end">
-            <a href="javascript:" class="m-r-10">mark as read</a>
-            <a href="javascript:">clear all</a>
-          </div>
+          <h6 class="d-inline-block m-b-0">Collaborators</h6>
         </div>
-        <ul class="noti-body">
-          <li class="n-title">
-            <p class="m-b-0">NEW</p>
-          </li>
+
+        <ul class="noti-body" style="overflow: auto;overflow-x: hidden;">
+          @for (item of collaborators?.members; track $index) {
           <li class="notification">
             <div class="media">
-              <img class="img-radius" src="assets/images/user/avatar-1.jpg" alt="Generic placeholder image" />
+              <img class="img-radius" src="https://thehotelexperience.com/wp-content/uploads/2019/08/default-avatar.png" alt="Generic placeholder image" />
               <div class="media-body">
                 <p>
-                  <strong>John Doe</strong>
+                  <strong>{{ item?.name}} {{$index == 0 ? "(Owner)" : "(Collaborator)"}}</strong>
                   <span class="n-time text-muted">
                     <i class="icon feather icon-clock m-r-10"></i>
                     30 min
                   </span>
                 </p>
-                <p>New ticket Added</p>
+                <p>{{ item?.email }}</p>
               </div>
             </div>
           </li>
-          <li class="n-title">
-            <p class="m-b-0">EARLIER</p>
-          </li>
-          <li class="notification">
-            <div class="media">
-              <img class="img-radius" src="assets/images/user/avatar-2.jpg" alt="Generic placeholder image" />
-              <div class="media-body">
-                <p>
-                  <strong>Joseph William</strong>
-                  <span class="n-time text-muted">
-                    <i class="icon feather icon-clock m-r-10"></i>
-                    30 min
-                  </span>
-                </p>
-                <p>Purchase New Theme and make payment</p>
-              </div>
-            </div>
-          </li>
-          <li class="notification">
-            <div class="media">
-              <img class="img-radius" src="assets/images/user/avatar-3.jpg" alt="Generic placeholder image" />
-              <div class="media-body">
-                <p>
-                  <strong>Sara Soudein</strong>
-                  <span class="n-time text-muted">
-                    <i class="icon feather icon-clock m-r-10"></i>
-                    30 min
-                  </span>
-                </p>
-                <p>currently login</p>
-              </div>
-            </div>
-          </li>
+          }
         </ul>
-        <div class="noti-footer">
-          <a href="javascript:">show all</a>
+
+        <div class="noti-footer" *ngIf="collaborators?.members[0]._id == parsedUserDetails.user._id">
+          <a (click)="collaboratorView()">Add People</a>
+          <div class="mt-2 d-flex gap-2" *ngIf="flag">
+            <input
+              type="email"
+              class="form-control form-control-sm"
+              [(ngModel)]="emailId"
+              placeholder="Enter email"
+            />
+            <button class="btn btn-sm btn-primary" (click)="addCollaborator()">Add</button>
+          </div>
         </div>
       </div>
     </div>
   </li>
-  <li (click)="this.visibleUserList = !this.visibleUserList">
+
+
+<!--   <li (click)="this.visibleUserList = !this.visibleUserList">
     <div class="dropdown">
       <a href="javascript:" class="displayChatbox dropdown-toggle">
         <i class="icon feather icon-mail" title="Mail InBox"></i>
