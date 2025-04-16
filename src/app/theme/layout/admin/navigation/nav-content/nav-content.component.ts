@@ -18,6 +18,7 @@ export class NavContentComponent implements OnInit {
   // version
   title = 'Demo application for version numbering';
   currentApplicationVersion = environment.appVersion;
+  teamName:any;
 
   // public pops
   navigations!: NavigationItem[];
@@ -113,10 +114,12 @@ export class NavContentComponent implements OnInit {
     })
    }
 
-   createTeam(name:any){
+   createTeam(){
+    let name = this.teamName
     this.httpRequest.createTeam({name}).subscribe({
       next:(res:any) => {
         this.message.success(res.message);
+        this.teamName = undefined
         this.dataShare.updateMessage('update')
       },
       error:(err) =>{

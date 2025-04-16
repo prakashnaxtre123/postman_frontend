@@ -22,6 +22,7 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 export default class TeamsComponent implements OnInit {
   workspaceList: any;
   documentDetails:any;
+  workspaceName: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -79,7 +80,8 @@ export default class TeamsComponent implements OnInit {
     })
   }
 
-  createWorkspace(name:any){
+  createWorkspace(){
+    let name = this.workspaceName
     let teamId: any
     this.activatedRoute.params.subscribe((param:any) => {
      teamId = param.id
@@ -88,6 +90,7 @@ export default class TeamsComponent implements OnInit {
     this.httpRequest.createWorkspace(obj).subscribe({
       next:(res:any)=> {
         this.message.success(res.message);
+        this.workspaceName = undefined
         this.getTeamDetailsByTeamId(teamId)
 
       },
@@ -101,6 +104,7 @@ export default class TeamsComponent implements OnInit {
     this.httpRequest.deleteDocument(doc._id).subscribe({
       next: (res:any) => {
         this.message.success(res.message);
+        this.documentDetails = undefined
         this.dataShare.updateMessage1("update")
       },
       error: (err) => {

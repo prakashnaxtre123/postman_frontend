@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideNoopAnimations } from '@angular/platform-browser/animations';
 
 // project import
 import { AppRoutingModule } from './app-routing.module';
@@ -53,7 +53,8 @@ import { en_US } from 'ng-zorro-antd/i18n';
     NzInputModule,NzIconModule],
   providers: [
     { provide: NZ_I18N, useValue: en_US },
-    provideHttpClient()
+    provideHttpClient(),
+    provideNoopAnimations()
   ],
   bootstrap: [AppComponent]
 })

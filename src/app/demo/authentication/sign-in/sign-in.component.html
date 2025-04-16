@@ -10,19 +10,19 @@
               <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><i class="feather icon-mail"></i></span>
                 <input type="email" class="form-control" formControlName="email" placeholder="Email address" aria-label="Username"
-                  aria-describedby="basic-addon1" />
+                  aria-describedby="basic-addon1" autocomplete="off"/>
               </div>
               <div class="input-group mb-4">
                 <span class="input-group-text" id="basic-addon3"><i class="feather icon-lock"></i></span>
                 <input type="password" class="form-control" formControlName="password" placeholder="Password" aria-label="Password"
-                  aria-describedby="basic-addon3" />
+                  aria-describedby="basic-addon3" autocomplete="off"/>
               </div>
-              <div class="form-group text-start mt-2">
+             <!--  <div class="form-group text-start mt-2">
                 <div class="checkbox checkbox-primary d-inline">
                   <input type="checkbox" name="checkbox-fill-1" id="checkbox-fill-a1" checked="" />
                   <label for="checkbox-fill-a1" class="cr">Save credentials</label>
                 </div>
-              </div>
+              </div> -->
               <div class="d-grid">
                 <button class="btn btn-block btn-primary mb-4" (click)="submitLoginForm()">SignIn</button>
               </div>
