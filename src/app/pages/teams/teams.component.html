@@ -7,7 +7,7 @@
           <input type="text" [(ngModel)]="workspaceName" nz-input placeholder="Workspace Name" />
         </nz-input-group>
         <ng-template #suffixIconButton1>
-          <button nz-button nzType="primary" nzSearch (click)="createWorkspace()"><nz-icon
+          <button nz-button nzType="primary" nzSearch [disabled]="!workspaceName" (click)="createWorkspace()"><nz-icon
               nzType="plus-square" /></button>
         </ng-template>
       </li>

@@ -6,7 +6,7 @@
           <input type="text" [(ngModel)]="teamName" nz-input placeholder="Team Name" />
           </nz-input-group>
           <ng-template #suffixIconButton1>
-            <button nz-button nzType="primary" (click)="createTeam()" nzSearch><nz-icon nzType="plus-square" /></button>
+            <button nz-button nzType="primary" (click)="createTeam()" [disabled]="!teamName" nzSearch><nz-icon nzType="plus-square" /></button>
           </ng-template>
       </li>
       @for (item of navigations; track item) {
