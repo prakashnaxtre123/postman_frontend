@@ -20,10 +20,12 @@
               <div class="media-body">
                 <p>
                   <strong>{{ item?.name}} {{$index == 0 ? "(Owner)" : "(Collaborator)"}}</strong>
-                  <span class="n-time text-muted">
-                    <i class="icon feather icon-clock m-r-10"></i>
-                    30 min
-                  </span>
+                  <ng-container *ngIf="collaborators?.members[0]?._id == parsedUserDetails?.user?._id">
+                    <span class="n-time text-muted" *ngIf="($index !== 0)">
+                      <button nz-button nzType="primary" nzDanger [nzLoading]="item?.loading" (click)="unAssignedUser(item)"><i *ngIf="!item.loading" class="icon feather icon-user-minus"></i></button>
+                    </span>
+                  </ng-container>
+
                 </p>
                 <p>{{ item?.email }}</p>
               </div>
@@ -41,7 +43,7 @@
               [(ngModel)]="emailId"
               placeholder="Enter email"
             />
-            <button class="btn btn-sm btn-primary" (click)="addCollaborator()">Add</button>
+            <button nz-button nzType="primary" (click)="addCollaborator()" [nzLoading]="loading"><i *ngIf="!loading" class="icon feather icon-plus-square"></i></button>
           </div>
         </div>
       </div>

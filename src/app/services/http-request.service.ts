@@ -49,4 +49,8 @@ export class HttpRequestService {
   assignUserToTeam(data:any){
     return this.http.post(`${environment.apiUrl + ENDPOINTS.assignUser}`,data,{ headers: this.getHeaders() })
   }
+  unAssignUserToTeam(data:any){
+    return this.http.post(`${environment.apiUrl + ENDPOINTS.unAssignUser}`,data,{ headers: this.getHeaders() })
+  }
+
 }

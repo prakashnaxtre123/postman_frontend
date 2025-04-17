@@ -34,6 +34,7 @@ export class NavRightComponent implements OnInit{
   collaborators:any;
   flag = false;
   emailId: any;
+  loading = false;
 
   // constructor
   constructor( private router:Router,private dataShare: DataSharingService, private httpRequest: HttpRequestService, private message:NzMessageService) {
@@ -65,6 +66,7 @@ export class NavRightComponent implements OnInit{
     this.router.navigate(['auth/signin'])
   }
   addCollaborator(){
+    this.loading = true
     let email = this.emailId;
     let teamId = this.collaborators._id
     let obj = {email,teamId};
@@ -74,13 +76,32 @@ export class NavRightComponent implements OnInit{
         this.dataShare.updateMessage1("update")
         this.flag = false;
         this.emailId = undefined
+        this.loading = false
       },
       error: (err) => {
-        this.message.success(err.error.message)
+        this.loading = false
+        this.message.error(err.error.message)
       }
     })
   }
   collaboratorView(){
     this.flag = !this.flag
+  }
+  unAssignedUser(user:any){
+    user.loading = true
+    let teamId = this.collaborators._id
+    let userId = user._id
+    let obj = {userId,teamId}
+    this.httpRequest.unAssignUserToTeam(obj).subscribe({
+      next: (res:any) => {
+        this.dataShare.updateMessage1("update")
+        this.message.success(res.message)
+        user.loading = false
+      },
+      error:(err) => {
+        user.loading = false
+        this.message.error(err.error.message)
+      }
+    })
   }
 }
