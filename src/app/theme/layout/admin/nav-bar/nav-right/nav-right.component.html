@@ -22,7 +22,7 @@
                   <strong>{{ item?.name}} {{$index == 0 ? "(Owner)" : "(Collaborator)"}}</strong>
                   <ng-container *ngIf="collaborators?.members[0]?._id == parsedUserDetails?.user?._id">
                     <span class="n-time text-muted" *ngIf="($index !== 0)">
-                      <button nz-button nzType="primary" nzDanger [nzLoading]="item?.loading" (click)="unAssignedUser(item)"><i *ngIf="!item.loading" class="icon feather icon-user-minus"></i></button>
+                      <button nz-button nzType="primary" nzDanger [nzLoading]="item?.loading" (click)="unAssignedUser(item,$index)"><i *ngIf="!item.loading" class="icon feather icon-user-minus"></i></button>
                     </span>
                   </ng-container>
 

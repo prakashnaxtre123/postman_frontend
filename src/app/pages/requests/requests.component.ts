@@ -38,6 +38,10 @@ export default class RequestsComponent implements OnChanges {
   bodyType: 'raw' | 'form-data' = 'raw';
   formData: FormDataItem[] = [];
   titleEdit = false;
+
+  teamEditFlag = true
+  workspaceEditFlag = true
+
   @Input() curl: any
   constructor(
     private http: HttpClient,
@@ -237,4 +241,30 @@ export default class RequestsComponent implements OnChanges {
   changeEditFlag(){
     this.titleEdit = true
   }
+
+
+  editTeam() {
+   this.teamEditFlag = false;
+  }
+
+  saveTeam() {
+    this.teamEditFlag = true;
+  }
+
+  deleteTeam() {
+    console.log('Delete Team clicked');
+  }
+
+  editWorkspace() {
+    this.workspaceEditFlag = false
+  }
+
+  saveWorkspace() {
+    this.workspaceEditFlag = true
+  }
+
+  deleteWorkspace() {
+    console.log('Delete Workspace clicked');
+  }
+
 }

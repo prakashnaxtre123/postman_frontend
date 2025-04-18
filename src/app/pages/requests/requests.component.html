@@ -1,4 +1,53 @@
 <div class="container mt-2"  style="max-height: 88vh; overflow-y: auto;overflow-x: hidden;">
+
+  <div class="info-card container-fluid p-4 shadow-sm rounded border bg-white">
+    <!-- Team Section -->
+    <div class="row align-items-center mb-3">
+      <div class="col-md-9">
+        <h5 class="mb-1 fw-semibold">
+          <i nz-icon nzType="team" nzTheme="outline" class="text-primary me-2"></i>
+          Team: <span class="text-dark">Konnecto Project</span>
+        </h5>
+      </div>
+      <div class="col-md-3 text-end">
+        <button class="btn btn-sm btn-light me-2" (click)="editTeam()" *ngIf="teamEditFlag == true" nz-tooltip="Edit Team">
+          <i nz-icon nzType="edit" nzTheme="outline" class="text-primary"></i>
+        </button>
+        <button class="btn btn-sm btn-light me-2" (click)="saveTeam()" *ngIf="teamEditFlag == false" nz-tooltip="Save Team">
+          <i nz-icon nzType="save" nzTheme="outline" class="text-success"></i>
+        </button>
+        <button class="btn btn-sm btn-light" (click)="deleteTeam()" nz-tooltip="Delete Team">
+          <i nz-icon nzType="delete" nzTheme="outline" class="text-danger"></i>
+        </button>
+      </div>
+    </div>
+
+    <hr class="my-2">
+
+    <!-- Workspace Section -->
+    <div class="row align-items-center">
+      <div class="col-md-9">
+        <h6 class="mb-0 fw-medium text-muted">
+          <i nz-icon nzType="folder" nzTheme="outline" class="text-warning me-2"></i>
+          Workspace: <span class="text-dark">Konneto Api</span>
+        </h6>
+      </div>
+      <div class="col-md-3 text-end">
+        <button class="btn btn-sm btn-light me-2" (click)="editWorkspace()" *ngIf="workspaceEditFlag == true" nz-tooltip="Edit Workspace">
+          <i nz-icon nzType="edit" nzTheme="outline" class="text-primary"></i>
+        </button>
+        <button class="btn btn-sm btn-light me-2" (click)="saveWorkspace()" *ngIf="workspaceEditFlag == false" nz-tooltip="Save Workspace">
+          <i nz-icon nzType="save" nzTheme="outline" class="text-success"></i>
+        </button>
+        <button class="btn btn-sm btn-light" (click)="deleteWorkspace()" nz-tooltip="Delete Workspace">
+          <i nz-icon nzType="delete" nzTheme="outline" class="text-danger"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+
   <div class="card" style="transition: none; box-shadow: none; padding: 0;">
     <div class="card-body">
      <div style="display: flex; justify-content: space-between;">

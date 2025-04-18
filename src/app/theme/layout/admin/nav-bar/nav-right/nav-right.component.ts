@@ -87,7 +87,7 @@ export class NavRightComponent implements OnInit{
   collaboratorView(){
     this.flag = !this.flag
   }
-  unAssignedUser(user:any){
+  unAssignedUser(user:any, index:number){
     user.loading = true
     let teamId = this.collaborators._id
     let userId = user._id
@@ -96,6 +96,7 @@ export class NavRightComponent implements OnInit{
       next: (res:any) => {
         this.dataShare.updateMessage1("update")
         this.message.success(res.message)
+        this.collaborators.members.splice(index,1)
         user.loading = false
       },
       error:(err) => {
